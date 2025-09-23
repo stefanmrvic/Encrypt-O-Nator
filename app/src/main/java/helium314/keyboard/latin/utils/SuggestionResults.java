@@ -8,6 +8,7 @@ package helium314.keyboard.latin.utils;
 
 import helium314.keyboard.latin.SuggestedWords.SuggestedWordInfo;
 import helium314.keyboard.latin.define.ProductionFlags;
+import kotlin.collections.CollectionsKt;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,18 +26,20 @@ public final class SuggestionResults extends TreeSet<SuggestedWordInfo> {
     public final boolean mIsBeginningOfSentence;
     public final boolean mFirstSuggestionExceedsConfidenceThreshold;
     private final int mCapacity;
+    private final int mEmojiCapacity; // we may want to leave room for some "normal" words
 
-    public SuggestionResults(final int capacity, final boolean isBeginningOfSentence,
+    public SuggestionResults(final int capacity, final int emojiCapacity, final boolean isBeginningOfSentence,
             final boolean firstSuggestionExceedsConfidenceThreshold) {
-        this(sSuggestedWordInfoComparator, capacity, isBeginningOfSentence,
+        this(sSuggestedWordInfoComparator, capacity, emojiCapacity, isBeginningOfSentence,
                 firstSuggestionExceedsConfidenceThreshold);
     }
 
     private SuggestionResults(final Comparator<SuggestedWordInfo> comparator, final int capacity,
-            final boolean isBeginningOfSentence,
+            final int emojiCapacity, final boolean isBeginningOfSentence,
             final boolean firstSuggestionExceedsConfidenceThreshold) {
         super(comparator);
         mCapacity = capacity;
+        mEmojiCapacity = emojiCapacity;
         if (ProductionFlags.INCLUDE_RAW_SUGGESTIONS) {
             mRawSuggestions = new ArrayList<>();
         } else {
@@ -48,6 +51,14 @@ public final class SuggestionResults extends TreeSet<SuggestedWordInfo> {
 
     @Override
     public boolean add(final SuggestedWordInfo e) {
+        if (mEmojiCapacity < mCapacity && e.isEmoji()) {
+            if (size() < mEmojiCapacity) return super.add(e);
+            var lastEmoji = CollectionsKt.last(this, SuggestedWordInfo::isEmoji);
+            if (comparator().compare(e, lastEmoji) > 0) return false;
+            remove(lastEmoji);
+            super.add(e);
+            return true;
+        }
         if (size() < mCapacity) return super.add(e);
         if (comparator().compare(e, last()) > 0) return false;
         super.add(e);
