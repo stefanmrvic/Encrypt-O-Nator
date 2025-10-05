@@ -62,7 +62,7 @@ Encrypt-O-Nator combines a fully-functional Android keyboard with Signal Protoco
 ## Technical Stack
 
 ### Encryption
-- **Signal Protocol** (libsignal-protocol-java) - Double Ratchet algorithm with forward secrecy
+- **Signal Protocol** (libsignal-protocol) - Double Ratchet algorithm with forward secrecy
 - **X3DH Key Agreement** - Extended Triple Diffie-Hellman for initial key exchange
 - **AES-256-CBC** - Symmetric encryption for message payloads
 
@@ -76,6 +76,7 @@ Encrypt-O-Nator combines a fully-functional Android keyboard with Signal Protoco
 - Maintains all original HeliBoard features and customization options
 
 ## Architecture
+```
 ┌─────────────────┐         ┌──────────────────┐
 │ Encrypt-O-Nator │◄────────┤ Crypto Middleware│
 │   (Keyboard)    │  IPC    │   (Key Manager)  │
@@ -84,6 +85,7 @@ Encrypt-O-Nator combines a fully-functional Android keyboard with Signal Protoco
 ├─ CryptoHelper             ├─ SignalProtocolManager
 ├─ ContactSelectorOverlay   ├─ QR Code Scanner/Generator
 └─ InputLogic (modified)    └─ Session Storage
+```
 
 **Data Flow:**
 1. Middleware manages key exchange and contact storage
@@ -104,7 +106,7 @@ Encrypt-O-Nator combines a fully-functional Android keyboard with Signal Protoco
 ### Building from Source
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/encrypt-o-nator.git
+git clone https://github.com/stefanmrvic/encrypt-o-nator.git
 cd encrypt-o-nator
 
 # Build
@@ -127,7 +129,7 @@ HeliBoard features fully preserved (swipe typing, themes, etc.)
 Credits
 
 Based on HeliBoard keyboard
-Uses libsignal-protocol-java for encryption
+Uses libsignal-protocol for encryption
 Inspired by the need for friction-free E2EE in everyday messaging
 
 License
