@@ -1,109 +1,136 @@
-# HeliBoard
-HeliBoard is a privacy-conscious and customizable open-source keyboard, based on AOSP / OpenBoard.
-Does not use internet permission, and thus is 100% offline.
+# Encrypt-O-Nator
 
-[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/helium314.keyboard/)
-[<img src="https://user-images.githubusercontent.com/663460/26973090-f8fdc986-4d14-11e7-995a-e7c5e79ed925.png" alt="Get APK from GitHub" height="80">](https://github.com/Helium314/HeliBoard/releases/latest)
-[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" alt="Get it on IzzyOnDroid" height="80">](https://apt.izzysoft.de/fdroid/index/apk/helium314.keyboard)
+![dr_heinz](https://github.com/user-attachments/assets/3182f002-f608-4f4e-acbe-72f876621f64)
 
-## Table of Contents
+A modified fork of Android Keyboard - [HeliBoard](https://github.com/Helium314/HeliBoard) with integrated end-to-end encryption capabilities. Type, encrypt, and decrypt messages directly from your keyboard without app switching.
 
-- [Features](#features)
-- [Contributing](#contributing-)
-   * [Reporting Issues](#reporting-issues)
-   * [Translations](#translations)
-   * [To Community Creation](#to-community)
-   * [Code Contribution](CONTRIBUTING.md)
-- [License](#license)
-- [Credits](#credits)
+## Overview
 
-# Features
-<ul>
-  <li>Add dictionaries for suggestions and spell check</li>
-  <ul>
-    <li>build your own, or get them  <a href="https://codeberg.org/Helium314/aosp-dictionaries#dictionaries">here</a>, or in the <a href="https://codeberg.org/Helium314/aosp-dictionaries#experimental-dictionaries">experimental</a> section (quality may vary)</li>
-    <li>additional dictionaries for emojis or scientific symbols can be used to provide suggestions (similar to "emoji search")</li>
-    <li>note that for Korean layouts, suggestions only work using <a href="https://github.com/openboard-team/openboard/commit/83fca9533c03b9fecc009fc632577226bbd6301f">this dictionary</a>, the tools in the dictionary repository are not able to create working dictionaries</li>
-  </ul>
-  <li>Customize keyboard themes (style, colors and background image)</li>
-  <ul>
-    <li>can follow the system's day/night setting on Android 10+ (and on some versions of Android 9)</li>
-    <li>can follow dynamic colors for Android 12+</li>
-  </ul>
-  <li>Customize keyboard <a href="https://github.com/Helium314/HeliBoard/blob/main/layouts.md">layouts</a> (only available when disabling <i>use system languages</i>)</li>
-  <li>Customize special layouts, like symbols, number,  or functional key layout</li>
-  <li>Multilingual typing</li>
-  <li>Glide typing (<i>only with closed source library</i> ☹️)</li>
-  <ul>
-    <li>library not included in the app, as there is no compatible open source library available</li>
-    <li>can be extracted from GApps packages ("<i>swypelibs</i>"), or downloaded <a href="https://github.com/erkserkserks/openboard/tree/46fdf2b550035ca69299ce312fa158e7ade36967/app/src/main/jniLibs">here</a> (click on the file and then "raw" or the tiny download button)</li>
-  </ul>
-  <li>Clipboard history</li>
-  <li>One-handed mode</li>
-  <li>Split keyboard</li>
-  <li>Number pad</li>
-  <li>Backup and restore your settings and learned word / history data</li>
-</ul>
+Encrypt-O-Nator combines a fully-functional Android keyboard with Signal Protocol encryption, allowing seamless secure communication through any messaging app. It works in tandem with the [Crypto Middleware](https://github.com/stefanmrvic/crypto-middleware) app for key exchange and contact management.
 
-For [FAQ](https://github.com/Helium314/HeliBoard/wiki/FAQ) and more information about the app and features, please visit the [wiki](https://github.com/Helium314/HeliBoard/wiki)
+## Features
 
-# Contributing ❤
+- **Hidden encryption controls** - Three discreet buttons integrated into the keyboard toolbar
+- **One-tap encryption** - Encrypt typed text instantly with selected contact's key
+- **Clipboard decryption** - Decrypt copied messages with automatic sender identification
+- **Contact selector** - Quick dropdown to switch between encryption recipients
+- **Zero app switching** - Everything happens within the keyboard interface
 
-## Reporting Issues
+## Workflow
 
-Whether you encountered a bug, or want to see a new feature in HeliBoard, you can contribute to the project by opening a new issue [here](https://github.com/Helium314/HeliBoard/issues). Your help is always welcome!
+### Initial Setup
 
-Before opening a new issue, be sure to check the following:
- - **Does the issue already exist?** Make sure a similar issue has not been reported by browsing [existing issues](https://github.com/Helium314/HeliBoard/issues?q=). Please search open and closed issues.
- - **Is the issue still relevant?** Make sure your issue is not already fixed in the latest version of HeliBoard.
- - **Is it a single topic?** If you want to suggest multiple things, open multiple issues.
- - **Did you use the issue template?** It is important to make life of our kind contributors easier by avoiding issues that miss key information to their resolution.
-Note that issues that that ignore part of the issue template will likely get treated with very low priority, as often they are needlessly hard to read or understand (e.g. huge screenshots, not providing a proper description, or addressing multiple topics). Blatant violation of the guidelines may result in the issue getting closed.
+1. **Install both apps:**
+   - Crypto Middleware (for key management)
+   - Encrypt-O-Nator (this keyboard)
 
-If you're interested, you can read the following useful text about effective bug reporting (a bit longer read): https://www.chiark.greenend.org.uk/~sgtatham/bugs.html
+2. **Exchange keys via Middleware:**
+   - Open Crypto Middleware
+   - Use QR code exchange to establish sessions with contacts
+   - Sessions are shared between both apps via ContentProvider
 
-## Translations
-Translations can be added using [Weblate](https://translate.codeberg.org/projects/heliboard/). You will need an account to update translations and add languages. Add the language you want to translate to in Languages -> Manage translated languages in the top menu bar.
-Updating translations in a PR will not be accepted, as it may cause conflicts with Weblate translations.
+3. **Enable keyboard:**
+   - Go to Android Settings → System → Languages & Input
+   - Enable Encrypt-O-Nator keyboard
+   - Grant "Display over other apps" permission for contact selector
 
-Some notes on translations
-* when translating metadata, translating the changelogs is rather useless. It's available as it was requested by translators.
-* the `hidden_features_message` is horrible to translate with Weblate, and serves little benefit as it's just a copy of what's already in the wiki: https://github.com/Helium314/HeliBoard/wiki/Hidden-functionality. It's been made available in the app on user request/contribution.
+### Daily Use
 
-## To Community
-You can share your themes, layouts and dictionaries with other people:
-* Themes can be saved and loaded using the menu on top-right in the _adjust colors_ screen
-  * You can share custom colors in a separate [discussion section](https://github.com/Helium314/HeliBoard/discussions/categories/custom-colors)
-* Custom keyboard layouts are text files whose content you can edit, copy and share
-  * this applies to main keyboard layouts and to special layouts adjustable in advanced settings
-  * see [layouts.md](layouts.md) for details
-  * You can share custom layouts in a separate [discussion section](https://github.com/Helium314/HeliBoard/discussions/categories/custom-layout)
-* Creating dictionaries is a little more work
-  * first you will need a wordlist, as described [here](https://codeberg.org/Helium314/aosp-dictionaries/src/branch/main/wordlists/sample.combined) and in the repository readme
-  * the you need to compile the dictionary using [external tools](https://github.com/remi0s/aosp-dictionary-tools)
-  * the resulting file (and ideally the wordlist too) can be shared with other users
-  * note that there will not be any further dictionaries added to this app, but you can add dictionaries to the [dictionaries repository](https://codeberg.org/Helium314/aosp-dictionaries)
+#### Sending Encrypted Messages
 
-## Code Contribution
-See [Contribution Guidelines](CONTRIBUTING.md)
+1. Open any messaging app (WhatsApp, Signal, Telegram, SMS, etc.)
+2. Type your message normally
+3. Tap **SELECT_WORD button** → Select recipient contact
+4. Tap **UNDO button** → Message encrypts and copies to clipboard
+5. Paste and send via your messaging app
 
-# License
+#### Receiving Encrypted Messages
 
-HeliBoard (as a fork of OpenBoard) is licensed under GNU General Public License v3.0.
+1. Copy the encrypted message you received
+2. In any text field, tap **REDO button**
+3. Popup displays decrypted message and sender name
+4. Tap "Copy" to copy plaintext, or dismiss popup
 
- > Permissions of this strong copyleft license are conditioned on making available complete source code of licensed works and modifications, which include larger works using a licensed work, under the same license. Copyright and license notices must be preserved. Contributors provide an express grant of patent rights.
+### Button Functions
 
-See repo's [LICENSE](/LICENSE) file.
+| Button | Original Function | Crypto Function |
+|--------|------------------|-----------------|
+| **SELECT_WORD** | Select word | **Contact Selector** - Choose encryption recipient |
+| **UNDO** | Undo typing | **Encrypt** - Encrypt text with selected contact's key |
+| **REDO** | Redo typing | **Decrypt** - Decrypt clipboard content, show popup |
 
-Since the app is based on Apache 2.0 licensed AOSP Keyboard, an [Apache 2.0](LICENSE-Apache-2.0) license file is provided.
-The icon is licensed under [Creative Commons BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). A [license file](LICENSE-CC-BY-SA-4.0) is also included.
+## Technical Stack
 
-# Credits
-- Icon by [Fabian OvrWrt](https://github.com/FabianOvrWrt) with contributions from [The Eclectic Dyslexic](https://github.com/the-eclectic-dyslexic)
-- [OpenBoard](https://github.com/openboard-team/openboard)
-- [AOSP Keyboard](https://android.googlesource.com/platform/packages/inputmethods/LatinIME/)
-- [LineageOS](https://review.lineageos.org/admin/repos/LineageOS/android_packages_inputmethods_LatinIME)
-- [Simple Keyboard](https://github.com/rkkr/simple-keyboard)
-- [Indic Keyboard](https://gitlab.com/indicproject/indic-keyboard)
-- [FlorisBoard](https://github.com/florisboard/florisboard/)
-- Our [contributors](https://github.com/Helium314/HeliBoard/graphs/contributors)
+### Encryption
+- **Signal Protocol** (libsignal-protocol-java) - Double Ratchet algorithm with forward secrecy
+- **X3DH Key Agreement** - Extended Triple Diffie-Hellman for initial key exchange
+- **AES-256-CBC** - Symmetric encryption for message payloads
+
+### Android Components
+- **ContentProvider** - IPC bridge between keyboard and middleware app
+- **EncryptedSharedPreferences** - Secure local storage for session data
+- **WindowManager Overlays** - Contact selector and decrypt popup UI
+
+### Keyboard Base
+- Fork of [HeliBoard](https://github.com/Helium314/HeliBoard) - Privacy-focused AOSP keyboard
+- Maintains all original HeliBoard features and customization options
+
+## Architecture
+┌─────────────────┐         ┌──────────────────┐
+│ Encrypt-O-Nator │◄────────┤ Crypto Middleware│
+│   (Keyboard)    │  IPC    │   (Key Manager)  │
+└────────┬────────┘         └──────────────────┘
+│                           │
+├─ CryptoHelper             ├─ SignalProtocolManager
+├─ ContactSelectorOverlay   ├─ QR Code Scanner/Generator
+└─ InputLogic (modified)    └─ Session Storage
+
+**Data Flow:**
+1. Middleware manages key exchange and contact storage
+2. CryptoProvider exposes encryption/decryption via ContentProvider
+3. Keyboard queries contacts, encrypts/decrypts via IPC calls
+4. No sensitive data stored in keyboard - all keys in Middleware
+
+## Security Considerations
+
+- **Forward secrecy** - Each message uses unique keys, deleted after use
+- **Deniability** - No cryptographic proof of message authorship
+- **No cloud backup** - Keys stored locally only, never synced
+- **One-time decryption** - Messages can only be decrypted once (ratchet advancement)
+- **Isolated storage** - Keyboard and middleware use separate secure storage
+
+## Installation
+
+### Building from Source
+```bash
+# Clone repository
+git clone https://github.com/yourusername/encrypt-o-nator.git
+cd encrypt-o-nator
+
+# Build
+./gradlew assembleRelease
+
+# Install both APKs
+adb install app/build/outputs/apk/release/encrypt-o-nator.apk
+adb install middleware/build/outputs/apk/release/cryptomiddleware.apk
+Permissions Required
+
+Display over other apps - Contact selector overlay and decrypt popup
+Read clipboard - Decrypt copied messages
+
+Compatibility
+
+Android 8.0+ (API 26+)
+Works with any messaging app that accepts text input
+HeliBoard features fully preserved (swipe typing, themes, etc.)
+
+Credits
+
+Based on HeliBoard keyboard
+Uses libsignal-protocol-java for encryption
+Inspired by the need for friction-free E2EE in everyday messaging
+
+License
+[Your chosen license - must be compatible with HeliBoard's GPL-3.0]
+
+Note: This keyboard provides transport-layer encryption. For maximum security, use apps with built-in E2EE (Signal, WhatsApp) alongside this tool for defense in depth.
