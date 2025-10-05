@@ -132,7 +132,4 @@ Based on HeliBoard keyboard
 Uses libsignal-protocol for encryption
 Inspired by the need for friction-free E2EE in everyday messaging
 
-License
-[Your chosen license - must be compatible with HeliBoard's GPL-3.0]
-
 Note: This keyboard provides transport-layer encryption. For maximum security, use apps with built-in E2EE (Signal, WhatsApp) alongside this tool for defense in depth.
